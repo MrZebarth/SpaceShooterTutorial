@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-
-    public float speed = 5f;
+    [SerializeField]
+    private float speed = 5f;
     
 	// Use this for initialization
 	void Start () {
@@ -13,8 +13,30 @@ public class Player : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        Movement();
+    }
+
+    private void Movement()
+    {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        transform.Translate(Time.deltaTime * speed*horizontalInput, Time.deltaTime*speed*verticalInput,0);
-	}
+        float velocity = Time.deltaTime * speed;
+        transform.Translate(velocity * horizontalInput, velocity * verticalInput, 0);
+        if (transform.position.y > 0)
+        {
+            transform.position = new Vector3(transform.position.x, 0, 0);
+        }
+        else if (transform.position.y < -3.3f)
+        {
+            transform.position = new Vector3(transform.position.x, -3.3f, 0);
+        }
+        if (transform.position.x > 8.2f)
+        {
+            transform.position = new Vector3(8.2f, transform.position.y, 0);
+        }
+        else if (transform.position.x < -8.2f)
+        {
+            transform.position = new Vector3(-8.2f, transform.position.y, 0);
+        }
+    }
 }
