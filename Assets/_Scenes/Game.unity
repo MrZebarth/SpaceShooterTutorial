@@ -283,6 +283,8 @@ MonoBehaviour:
   _fireRate: 0.25
   laserPrefab: {fileID: 1805455250360578, guid: c0c459d9c25db04449194748def28cee,
     type: 2}
+  tripleShot: {fileID: 1449694789774698, guid: 17b778ff590fb75428b0a7968f9c5b1b, type: 2}
+  canTripleShot: 0
 --- !u!212 &305626319
 SpriteRenderer:
   m_ObjectHideFlags: 0

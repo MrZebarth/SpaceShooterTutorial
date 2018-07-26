@@ -10,6 +10,10 @@ public class Player : MonoBehaviour {
     private float _nextFire = 0.0f;
     [SerializeField]
     private GameObject laserPrefab;
+    [SerializeField]
+    private GameObject tripleShot;
+
+    public bool canTripleShot = false;
 	// Use this for initialization
 	void Start () {
         transform.position = new Vector3(0, 0, 0);
@@ -48,10 +52,31 @@ public class Player : MonoBehaviour {
 
     private void Shoot()
     {
+        
         if (Input.GetButtonDown("Fire1") && _nextFire < Time.time)
         {
             _nextFire = Time.time + _fireRate;
-            Instantiate(laserPrefab,transform.position+new Vector3(0,0.88f,0),Quaternion.identity);
+            if (canTripleShot)
+            {
+                Instantiate(tripleShot, transform.position, Quaternion.identity);
+                
+            }
+            else
+            {
+                Instantiate(laserPrefab, transform.position + new Vector3(0, 0.88f, 0), Quaternion.identity);
+            }
         }
+    }
+
+    public void TripleShot()
+    {
+        canTripleShot = true;
+        StartCoroutine(TripleShotPowerDownRoutine());
+        
+    }
+    IEnumerator TripleShotPowerDownRoutine()
+    {
+        yield return new WaitForSeconds(5f);
+        canTripleShot = false;
     }
 }
