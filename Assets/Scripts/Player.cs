@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
     private GameObject tripleShot;
 
     public bool canTripleShot = false;
+    public bool canSpeed = false;
 	// Use this for initialization
 	void Start () {
         transform.position = new Vector3(0, 0, 0);
@@ -30,7 +31,8 @@ public class Player : MonoBehaviour {
     {
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        float velocity = Time.deltaTime * _speed;
+        float boost = (canSpeed ? 2f : 1f);
+        float velocity = Time.deltaTime * _speed * boost;
         transform.Translate(velocity * horizontalInput, velocity * verticalInput, 0);
         if (transform.position.y > 0)
         {
@@ -78,5 +80,17 @@ public class Player : MonoBehaviour {
     {
         yield return new WaitForSeconds(5f);
         canTripleShot = false;
+    }
+
+    public void SpeedBoost()
+    {
+        canSpeed = true;
+        StartCoroutine(SpeedBoostPowerDown());
+    }
+
+    IEnumerator SpeedBoostPowerDown()
+    {
+        yield return new WaitForSeconds(5f);
+        canSpeed = false;
     }
 }
