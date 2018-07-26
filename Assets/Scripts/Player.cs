@@ -9,9 +9,13 @@ public class Player : MonoBehaviour {
     private float _fireRate = 0.25f;
     private float _nextFire = 0.0f;
     [SerializeField]
-    private GameObject laserPrefab;
+    private GameObject _laserPrefab;
     [SerializeField]
-    private GameObject tripleShot;
+    private GameObject _tripleShot;
+    [SerializeField]
+    private int _lives = 3;
+    [SerializeField]
+    private GameObject explosion;
 
     public bool canTripleShot = false;
     public bool canSpeed = false;
@@ -60,12 +64,12 @@ public class Player : MonoBehaviour {
             _nextFire = Time.time + _fireRate;
             if (canTripleShot)
             {
-                Instantiate(tripleShot, transform.position, Quaternion.identity);
+                Instantiate(_tripleShot, transform.position, Quaternion.identity);
                 
             }
             else
             {
-                Instantiate(laserPrefab, transform.position + new Vector3(0, 0.88f, 0), Quaternion.identity);
+                Instantiate(_laserPrefab, transform.position + new Vector3(0, 0.88f, 0), Quaternion.identity);
             }
         }
     }
@@ -92,5 +96,15 @@ public class Player : MonoBehaviour {
     {
         yield return new WaitForSeconds(5f);
         canSpeed = false;
+    }
+
+    public void Damage()
+    {
+        _lives--;
+        if (_lives == 0)
+        {
+            Instantiate(explosion, this.transform.position, Quaternion.identity);
+            Destroy(this.gameObject);
+        }
     }
 }
