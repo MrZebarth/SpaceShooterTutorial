@@ -34,7 +34,7 @@ public class Powerup : MonoBehaviour {
                 }
                 else if (powerupID == 2)
                 {
-                    //p.Shield();
+                    p.Shield();
                 }
                 
             }

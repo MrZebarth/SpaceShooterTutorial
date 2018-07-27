@@ -16,7 +16,9 @@ public class Player : MonoBehaviour {
     private int _lives = 3;
     [SerializeField]
     private GameObject explosion;
-
+    [SerializeField]
+    private GameObject shieldGameObject;
+    public bool shieldActive = false;
     public bool canTripleShot = false;
     public bool canSpeed = false;
 	// Use this for initialization
@@ -100,11 +102,26 @@ public class Player : MonoBehaviour {
 
     public void Damage()
     {
-        _lives--;
-        if (_lives == 0)
+        if (shieldActive)
         {
-            Instantiate(explosion, this.transform.position, Quaternion.identity);
-            Destroy(this.gameObject);
+            shieldActive = false;
+            shieldGameObject.SetActive(false);
+            return;
         }
+        else
+        {
+            _lives--;
+            if (_lives == 0)
+            {
+                Instantiate(explosion, this.transform.position, Quaternion.identity);
+                Destroy(this.gameObject);
+            }
+        }
+    }
+
+    public void Shield()
+    {
+        shieldActive = true;
+        shieldGameObject.SetActive(true);
     }
 }
