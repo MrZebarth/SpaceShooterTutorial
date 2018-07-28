@@ -7,17 +7,23 @@ public class SpawnManager : MonoBehaviour {
     private GameObject enemyShipPrefab;
     [SerializeField]
     private GameObject[] powerUps;
-
+    private GameManager GM;
 
 	// Use this for initialization
 	void Start () {
+        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
         StartCoroutine(EnemySpawn());
         StartCoroutine(PowerUpSpawn());
 	}
 	
+    public void StartSpawn()
+    {
+        StartCoroutine(EnemySpawn());
+        StartCoroutine(PowerUpSpawn());
+    }
 	IEnumerator EnemySpawn() 
     {
-        while (true)
+        while (!GM.gameOver)
         {
             yield return new WaitForSeconds(5.0f);
             Instantiate(enemyShipPrefab, new Vector3(Random.Range(-8f, 8f), 8f, 0), Quaternion.identity);
@@ -26,7 +32,7 @@ public class SpawnManager : MonoBehaviour {
 
     IEnumerator PowerUpSpawn()
     {
-        while (true)
+        while (!GM.gameOver)
         {
             int randomPowerup = Random.Range(0, 3);
             yield return new WaitForSeconds(8.0f);

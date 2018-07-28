@@ -8,9 +8,11 @@ public class EnemyBehaviour : MonoBehaviour {
     [SerializeField]
     private GameObject explosion;
     private UIManager UIM;
+    private GameManager GM;
 	// Use this for initialization
 	void Start () {
         UIM = GameObject.Find("Canvas").GetComponent<UIManager>();
+        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
 	}
 	
 	// Update is called once per frame
@@ -20,9 +22,16 @@ public class EnemyBehaviour : MonoBehaviour {
         //when off the screen
         if (transform.position.y < -5.25f)
         {
-            //respawn with new x
-            float randomX = Random.Range(-8f, 8f);
-            transform.position = (new Vector3(randomX, 6f, 0));
+            //respawn with new x if not game over
+            if (!GM.gameOver)
+            {
+                float randomX = Random.Range(-8f, 8f);
+                transform.position = (new Vector3(randomX, 6f, 0));
+            }
+            else
+            {
+                Destroy(this.gameObject);
+            }
         }
 	}
 

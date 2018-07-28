@@ -22,7 +22,10 @@ public class Player : MonoBehaviour {
     public bool canTripleShot = false;
     public bool canSpeed = false;
 
+
+    private SpawnManager SM;
     private UIManager UIM;
+    private GameManager GM;
 	// Use this for initialization
 	void Start () {
         transform.position = new Vector3(0, 0, 0);
@@ -30,6 +33,12 @@ public class Player : MonoBehaviour {
         if (UIM)
         {
             UIM.UpdateLives(_lives);
+        }
+        GM = GameObject.Find("GameManager").GetComponent<GameManager>();
+        SM = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        if (SM)
+        {
+            SM.StartSpawn();
         }
 	}
 	
@@ -124,6 +133,8 @@ public class Player : MonoBehaviour {
             }
             if (_lives == 0)
             {
+                GM.gameOver = true;
+                UIM.ShowTitleScreen();
                 Instantiate(explosion, this.transform.position, Quaternion.identity);
                 Destroy(this.gameObject);
             }
