@@ -18,6 +18,9 @@ public class Player : MonoBehaviour {
     private GameObject explosion;
     [SerializeField]
     private GameObject shieldGameObject;
+
+    [SerializeField]
+    private GameObject[] engines;
     public bool shieldActive = false;
     public bool canTripleShot = false;
     public bool canSpeed = false;
@@ -26,6 +29,7 @@ public class Player : MonoBehaviour {
     private SpawnManager SM;
     private UIManager UIM;
     private GameManager GM;
+    private AudioSource audioSource;
 	// Use this for initialization
 	void Start () {
         transform.position = new Vector3(0, 0, 0);
@@ -40,6 +44,7 @@ public class Player : MonoBehaviour {
         {
             SM.StartSpawn();
         }
+        audioSource = GetComponent<AudioSource>();
 	}
 	
 	// Update is called once per frame
@@ -60,9 +65,9 @@ public class Player : MonoBehaviour {
         {
             transform.position = new Vector3(transform.position.x, 0, 0);
         }
-        else if (transform.position.y < -3.3f)
+        else if (transform.position.y < -4.2f)
         {
-            transform.position = new Vector3(transform.position.x, -3.3f, 0);
+            transform.position = new Vector3(transform.position.x, -4.2f, 0);
         }
         if (transform.position.x > 8.2f)
         {
@@ -79,6 +84,7 @@ public class Player : MonoBehaviour {
         
         if (Input.GetButtonDown("Fire1") && _nextFire < Time.time)
         {
+            audioSource.Play();
             _nextFire = Time.time + _fireRate;
             if (canTripleShot)
             {
@@ -127,6 +133,17 @@ public class Player : MonoBehaviour {
         else
         {
             _lives--;
+            if (_lives == 2)
+            {
+                engines[Random.Range(0, 2)].SetActive(true);
+            }
+            else if (_lives == 1)
+            {
+                foreach (var x in engines)
+                {
+                    x.SetActive(true);
+                }
+            }
             if (UIM)
             {
                 UIM.UpdateLives(_lives);

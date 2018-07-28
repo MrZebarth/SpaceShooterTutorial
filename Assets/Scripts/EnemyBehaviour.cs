@@ -9,6 +9,9 @@ public class EnemyBehaviour : MonoBehaviour {
     private GameObject explosion;
     private UIManager UIM;
     private GameManager GM;
+    [SerializeField]
+    private AudioClip clip;
+
 	// Use this for initialization
 	void Start () {
         UIM = GameObject.Find("Canvas").GetComponent<UIManager>();
@@ -46,12 +49,14 @@ public class EnemyBehaviour : MonoBehaviour {
             {
                 UIM.UpdateScore();
             }
+            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
             Instantiate(explosion, this.transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
         else if (other.tag == "Player")
         {
             other.GetComponent<Player>().Damage();
+            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
             Instantiate(explosion, this.transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }

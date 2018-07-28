@@ -7,6 +7,8 @@ public class Powerup : MonoBehaviour {
     float speed = 3.0f;
     [SerializeField]
     private int powerupID; //0=triple shot, 1=speed boost, 2=shield
+    [SerializeField]
+    private AudioClip clip;
 	// Use this for initialization
 	void Start () {
 		
@@ -42,6 +44,7 @@ public class Powerup : MonoBehaviour {
                 }
                 
             }
+            AudioSource.PlayClipAtPoint(clip, Camera.main.transform.position);
             Destroy(this.gameObject);
         }
     }

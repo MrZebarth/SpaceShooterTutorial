@@ -25,8 +25,8 @@ public class SpawnManager : MonoBehaviour {
     {
         while (!GM.gameOver)
         {
-            yield return new WaitForSeconds(5.0f);
             Instantiate(enemyShipPrefab, new Vector3(Random.Range(-8f, 8f), 8f, 0), Quaternion.identity);
+            yield return new WaitForSeconds(5.0f);
         }
     }
 
@@ -35,8 +35,8 @@ public class SpawnManager : MonoBehaviour {
         while (!GM.gameOver)
         {
             int randomPowerup = Random.Range(0, 3);
-            yield return new WaitForSeconds(8.0f);
             Instantiate(powerUps[randomPowerup], new Vector3(Random.Range(-8f, 8f), 8f, 0), Quaternion.identity);
+            yield return new WaitForSeconds(8.0f);
         }
     }
 
