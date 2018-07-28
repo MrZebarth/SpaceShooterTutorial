@@ -21,9 +21,16 @@ public class Player : MonoBehaviour {
     public bool shieldActive = false;
     public bool canTripleShot = false;
     public bool canSpeed = false;
+
+    private UIManager UIM;
 	// Use this for initialization
 	void Start () {
         transform.position = new Vector3(0, 0, 0);
+        UIM = GameObject.Find("Canvas").GetComponent<UIManager>();
+        if (UIM)
+        {
+            UIM.UpdateLives(_lives);
+        }
 	}
 	
 	// Update is called once per frame
@@ -111,6 +118,10 @@ public class Player : MonoBehaviour {
         else
         {
             _lives--;
+            if (UIM)
+            {
+                UIM.UpdateLives(_lives);
+            }
             if (_lives == 0)
             {
                 Instantiate(explosion, this.transform.position, Quaternion.identity);

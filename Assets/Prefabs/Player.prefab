@@ -154,7 +154,7 @@ MonoBehaviour:
     type: 2}
   _tripleShot: {fileID: 1858233451736758, guid: 17b778ff590fb75428b0a7968f9c5b1b,
     type: 2}
-  _lives: 1
+  _lives: 3
   explosion: {fileID: 1341909254488488, guid: a67a41a052a6c72418d630ffc678c689, type: 2}
   shieldGameObject: {fileID: 1071589131977030}
   shieldActive: 0

@@ -7,9 +7,10 @@ public class EnemyBehaviour : MonoBehaviour {
     private float speed = 4.0f;
     [SerializeField]
     private GameObject explosion;
+    private UIManager UIM;
 	// Use this for initialization
 	void Start () {
-		
+        UIM = GameObject.Find("Canvas").GetComponent<UIManager>();
 	}
 	
 	// Update is called once per frame
@@ -32,7 +33,10 @@ public class EnemyBehaviour : MonoBehaviour {
             //destroy the other
             Destroy(other.gameObject);
             //destroy yourself
-
+            if (UIM)
+            {
+                UIM.UpdateScore();
+            }
             Instantiate(explosion, this.transform.position, Quaternion.identity);
             Destroy(this.gameObject);
         }
